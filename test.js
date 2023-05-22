@@ -9,11 +9,27 @@ const remainingMOney = (orange, apple, money) => {
     const minus =  money-total;     
     return minus;
 }
-console.log(remainingMOney(5,5,4000));
+// console.log(remainingMOney(5,5,4000));
 
 
 const remainder = (input) => {
      const outPut = input % 5 ;
     return outPut
 }
-console.log(remainder(108));
+// console.log(remainder(108));
+
+
+// find grades of me and my friends
+
+const findGrade = (number) => {
+    
+     if (number >= 80) {
+              console.log('your grade is A ');
+    }
+    
+     else if (number<80||number<=60) {
+         console.log('your grade is b');
+     }
+    
+}
+// findGrade(79)
