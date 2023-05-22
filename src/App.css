@@ -1,0 +1,30 @@
+.box{
+ 
+  background-color: aqua;
+  border-radius: 5px;
+  width: 100vw;
+  z-index: 1000000000000000000;
+}
+.box1{
+  animation: run 1s ease 0.2s !important;
+  transform-origin: 150% 90%;
+  z-index: 1000000000000000000;
+  width: 100vw;
+
+
+
+}
+@keyframes run{
+
+ 0%{
+  opacity: 0;
+  transform: scaleX(0);
+
+
+ }
+ 100%{
+  opacity: 1;
+  background: yellow;
+  transform: scaleX(1);
+ }
+}
