@@ -11,3 +11,9 @@ const remainingMOney = (orange, apple, money) => {
 }
 console.log(remainingMOney(5,5,4000));
 
+
+const remainder = (input) => {
+     const outPut = input % 5 ;
+    return outPut
+}
+console.log(remainder(108));
