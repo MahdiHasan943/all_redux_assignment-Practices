@@ -33,3 +33,12 @@ const findGrade = (number) => {
     
 }
 // findGrade(79)
+
+//4 reverse an array element usign loop ;
+const arr = [30, 40, 60, 80, 302, 400, 500];
+for (let i = arr.length - 1; i >= 0; i--){
+    let number = arr[i];
+    // console.log(number);
+    
+}
+
