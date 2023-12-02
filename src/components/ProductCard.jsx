@@ -1,6 +1,13 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addTocartA } from '../redux/actionType/ProductAction';
 
-const ProductCard = ({prodcut}) => {
+const ProductCard = ({ prodcut }) => {
+    const cart = useSelector(state => state.product.cart)
+
+    console.log(cart,'card');
+    const dispatch = useDispatch();
+
     if (!prodcut) {
         return null; // Or handle the case when product is undefined
       }
@@ -13,6 +20,8 @@ const ProductCard = ({prodcut}) => {
           <p className='top-0 absolute left-[150px]'>{date}</p>
           <p >price : <span className='text-red-500 font-semibold'>{price}</span></p>
           <p >Rating : <span className='text-red-500 font-semibold'>{rating}</span></p>
+          <button onClick={() =>dispatch(addTocartA(prodcut))} className='py-2 text-white px-8 bg-indigo-600 rounded-full'>AddTocart</button>
+
       </div>
   )
 }

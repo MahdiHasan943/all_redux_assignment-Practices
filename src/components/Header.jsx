@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { BsFillCartFill } from "react-icons/bs";
 import { IoIosListBox } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const cart = useSelector(state => state.product.cart);
 
   return (
     <nav className='h-14 bg-indigo-200 rounded-full m-2 max-w-7xl mx-auto px-5'>
@@ -28,7 +30,7 @@ const Navbar = () => {
         </li> */}
         <li title='cart' className='relative bg-indigo-500 p-2 rounded-full'>
           <Link to='/readHistory'>
-            <p className="text-white absolute top-[-10px]">0</p>
+            <p className="text-white absolute top-[-10px]">{cart?.length||0}</p>
             <BsFillCartFill className='text-white ' />
           </Link>
         </li>

@@ -1,10 +1,17 @@
-import { LOAD_PRODUCT, PRODUCT_LOADED, Product_Type, REMOVE_PRODUCT, SORT_PRODUCTS_ASC, SORT_PRODUCTS_DESC, UPDATE_PRODUCT } from "../types/Type"
+import { ADD_TO_CART, LOAD_PRODUCT, PRODUCT_LOADED, Product_Type, REMOVE_FROM_CART, REMOVE_PRODUCT, SORT_PRODUCTS_ASC, SORT_PRODUCTS_DESC, UPDATE_PRODUCT } from "../types/Type"
 
 export const Product_Action = (product) => {
     return {
         type: Product_Type,
         payload:product
    } 
+}
+
+export const addTocartA = (product) => {
+  return {
+    type: ADD_TO_CART,
+    payload:product
+  }
 }
 
 
@@ -34,7 +41,12 @@ export const loaded = (products) => {
       payload:id,product,
     }
 }
-  
+export const removefromCart = (product) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: product,
+  };
+};
 
 
 export const sortProductsAsc = (product) => {
