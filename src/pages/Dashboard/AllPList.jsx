@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { loadProductData } from '../../redux/thunk/fetchProduct';
-import { removeProducts } from '../../redux/thunk/removeProduct';
-import Update from '../../components/Update';
+
 
 const AllPList = () => {
-
-  const products=useSelector(state=>state.product.products)
-  const dispatch = useDispatch()
-console.log(products);
+  const [products, setProducts] = useState([]);
   
-  useEffect(() => {
-    dispatch(loadProductData())
-  }, [products])
+//   const products=useSelector(state=>state.product.products)
+//   const dispatch = useDispatch()
+// console.log(products);
+  
+//   useEffect(() => {
+//     dispatch(loadProductData())
+//   }, [products])
 
-  const [activeProductId, setActiveProductId] = useState(null);
+//   const [activeProductId, setActiveProductId] = useState(null);
 
-  const handleEditClick = (productId) => {
-    setActiveProductId(productId);
-  };
+//   const handleEditClick = (productId) => {
+//     setActiveProductId(productId);
+//   };
 
 
   return (

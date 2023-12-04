@@ -4,8 +4,9 @@ import { BsFillCartFill } from "react-icons/bs";
 import { IoIosListBox } from "react-icons/io";
 import { useSelector } from "react-redux";
 
+
 const Navbar = () => {
-  const cart = useSelector(state => state.product.cart);
+  const cart = useSelector(state => state.cart.cart);
 
   return (
     <nav className='h-14 bg-indigo-200 rounded-full m-2 max-w-7xl mx-auto px-5'>

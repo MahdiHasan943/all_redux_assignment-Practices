@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {useDispatch} from 'react-redux'
-import { AddProducts } from '../../redux/thunk/addProducts';
+
 const AddToP = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
@@ -13,29 +12,30 @@ const AddToP = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  }
 
-    const product = {
-      name,
-      image,
-      price,
-      des,
-      rating,
-      date
-    };
+  //   const product = {
+  //     name,
+  //     image,
+  //     price,
+  //     des,
+  //     rating,
+  //     date
+  //   };
 
-    // Dispatch the action directly
-    dispatch(AddProducts(product));
+  //   // Dispatch the action directly
+  //   dispatch(AddProducts(product));
 
-    console.log(product);
+  //   console.log(product);
 
-    // Clear the input fields
-    setName('');
-    setImage('');
-    setPrice('');
-    setDes('');
-    setRating('');
-    setDate('');
-  };
+  //   // Clear the input fields
+  //   setName('');
+  //   setImage('');
+  //   setPrice('');
+  //   setDes('');
+  //   setRating('');
+  //   setDate('');
+  // };
 
   // ... rest of your component code
 

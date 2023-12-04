@@ -1,75 +1,80 @@
 import React, { useEffect, useState } from 'react'
-import {useDispatch, useSelector}from 'react-redux'
-import { loadProductData } from '../../redux/thunk/fetchProduct'
-import ProductCard from '../../components/ProductCard'
-import { sortProductsAsc, sortProductsDesc } from '../../redux/actionType/ProductAction'
+import ProductCard from '../../components/ProductCard';
+import { toggle, toggleBrands } from '../../features/filter/FilterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+// 
 const Home = () => {
   const [active, setActive] = useState(false);
-  const products = useSelector(state => state.product.products)
-  const filters = useSelector(state => state.filter.filters);
-  
-  const dispatch = useDispatch()
-console.log(products);
-  
+  const [products, setProducts] = useState([]);
+  const filters = useSelector(state => state.filter);
+  const { brands, stock } = filters;
+  console.log(filters);
   useEffect(() => {
-    dispatch(loadProductData())
-  }, [])
+    fetch('http://localhost:5000/api/v1/products')
+      .then(res => res.json())
+    .then(data=>setProducts(data.data))
+  },[])
+
   let content;
-
-  if (filters.length === 0 ) {
-    content = products?.map(c => (
-      <ProductCard prodcut={c} key={c._id}/>
-
+  // console.log(content);
+  if (products?.length) {
+   content = products?.map((product) =>( 
+      <ProductCard key={index} product={product} />
     ))
-    
-  }
-  else {
-   
-
-    content = filters?.map(c => (
-      <ProductCard prodcut={c} key={c._id}/>))
   }
 
-     
-      
-
-console.log(filters,'24');
-
-
-
-  return (
-    <div className='px-4 sm:px-8'>
-      <div className="w-full flex justify-end items-center gap-4">
-      <button
-          onClick={() => {
-            dispatch(sortProductsAsc(products))
-            setActive('last')
-          }}
-  className={`${
-    active === "last" ? 'text-white bg-indigo-600 ' : 'border border-black'
-  } py-3 duration-300 delay-50 ease-linear px-4 hover:bg-indigo-600 hover:text-white`}
->
-  LastUpdated
-        </button>
-        <button
-          onClick={() => {
-            dispatch(sortProductsDesc(products))
-            setActive('first')
-          }}
-  className={`${
-    active === "first" ? 'text-white bg-indigo-600 ' : 'border border-black'
-  } py-3 duration-300 delay-50 ease-linear px-4 hover:bg-indigo-600 hover:text-white`}
-  >
-  FirstUpdated
-</button>
-
-      </div>
-      <div className="grid mx-auto grid-cols-3 gap-5 py-4">
-        {
-          content
+  if (products?.length && (stock||brands?.length)) {
+    content = products
+      ?.filter(product => {
+        if (stock) {
+          return product?.status===true
         }
-      </div>
+        return product
+      })
+      .filter(product => {
+        if (brands?.length) {
+         return brands.includes(product?.brand)
+        }
+        return product
+       })
+      ?.map((product,index) => ( 
+       <ProductCard key={index} product={product} />)
+     )
+   }
+  const activeClass = "text-white  bg-indigo-500 border-white";
+
+const dispatch=useDispatch()
+  return (
+    <div className='max-w-7xl gap-14 mx-auto my-10'>
+    <div className='mb-10 flex justify-end gap-5'>
+      <button
+        onClick={() => dispatch(toggle())}
+          className={`border px-3 py-2 rounded-full font-semibold ${ stock?activeClass: null } `}
+          // 
+
+      >
+        In Stock
+      </button>
+      <button onClick={() => dispatch(toggleBrands('amd'))}
+      
+        
+          className={`border px-3 py-2 rounded-full font-semibold            ${ brands.includes("amd")?activeClass: null }
+          `}
+      >
+        AMD
+      </button>
+      <button onClick={() => dispatch(toggleBrands('intel'))}
+      
+      className={`border px-3 py-2 rounded-full font-semibold       ${ brands.includes("intel")?activeClass: null }
+      `}
+        >
+        Intel
+      </button>
     </div>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14'>
+      {content}
+    </div>
+  </div>
   )
 }
 

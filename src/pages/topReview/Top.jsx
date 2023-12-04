@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { loadProductData } from '../../redux/thunk/fetchProduct';
+import React, { useEffect, useState } from 'react'
 import ProductCard from '../../components/ProductCard';
 
 const Top = () => {
-  const products=useSelector(state=>state.product.products)
-  const dispatch = useDispatch()
-console.log(products);
-  
+
+  const [active, setActive] = useState(false);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
-    dispatch(loadProductData())
-  }, [])
+    fetch('http://localhost:5000/api/v1/products')
+      .then(res => res.json())
+    .then(data=>setProducts(data.data))
+  },[])
   let content;
-  const sortedProducts = products?.filter(p => p.rating).sort((a, b) => b.rating - a.rating);
- 
-  content = sortedProducts?.map(c => (
-    <ProductCard prodcut={c} key={c._id}/>
+  const filter=products.sort((a,b)=>a.rating -b.rating)
+
+  content = filter?.map(product => (
+    <ProductCard prodcut={product} key={product._id}/>
   ))
   return (
     <div className='px-4 sm:px-8'>
