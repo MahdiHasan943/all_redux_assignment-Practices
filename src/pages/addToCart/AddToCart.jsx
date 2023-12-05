@@ -12,7 +12,8 @@ const AddToCart = () => {
       {
         cart?.map((product)=>(
           <div key={product?._id} className='relative  capitalize '>
-            <p>{product?.quantity}{product?.model}</p>
+            <p>{product?.quantity}</p>
+            <p>{product?.model}</p>
             <img className='w-[250px] h-[180px]' src={product?.image} alt="" />
           <p >price : <span className='text-red-500 font-semibold'>{product?.price}</span></p>
           <p >Rating : <span className='text-red-500 font-semibold'>{product?.rating}</span></p>

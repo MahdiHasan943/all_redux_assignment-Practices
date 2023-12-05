@@ -2,23 +2,32 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../../components/ProductCard';
 import { toggle, toggleBrands } from '../../features/filter/FilterSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../features/products/ProductSlice';
 // 
 const Home = () => {
   const [active, setActive] = useState(false);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const filters = useSelector(state => state.filter);
   const { brands, stock } = filters;
+  const {products,isLoading,} = useSelector(state => state.product);
+
   console.log(filters);
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/products')
-      .then(res => res.json())
-    .then(data=>setProducts(data.data))
+    // fetch('http://localhost:5000/api/v1/products')
+    //   .then(res => res.json())
+    // .then(data=>setProducts(data.data))
+    dispatch(getProducts())
   },[])
+
 
   let content;
   // console.log(content);
+  if (isLoading) {
+    content=<h1 className='py-20 px-8 text-4xl text-indigo-600 font-bold text-center'>Loading.....</h1>
+  }
+  
   if (products?.length) {
-   content = products?.map((product) =>( 
+   content = products?.map((product,index) =>( 
       <ProductCard key={index} product={product} />
     ))
   }
