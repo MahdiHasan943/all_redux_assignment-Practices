@@ -1,43 +1,56 @@
 import React, { useEffect, useState } from 'react';
+import { useAddProductMutation } from '../../features/api/apiSlice';
+import toast from 'react-hot-toast';
 
 const AddToP = () => {
   // const dispatch = useDispatch();
+  const [postProduct,{isSuccess,isLoading}] = useAddProductMutation();
 
-  const [name, setName] = useState('');
+  const [model, setModel] = useState('');
   const [image, setImage] = useState('');
   const [price, setPrice] = useState('');
   const [des, setDes] = useState('');
   const [rating, setRating] = useState('');
   const [date, setDate] = useState('');
 
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading('posting',{id:'AddProduct'})
+    }
+
+    if (isSuccess) {
+      toast.success('post success ',{id:'AddProduct'})
+    }
+
+  },[isLoading,isSuccess])
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
-
-  //   const product = {
-  //     name,
-  //     image,
-  //     price,
-  //     des,
-  //     rating,
-  //     date
-  //   };
+    const product = {
+      model,
+      image,
+      price,
+      des,
+      rating,
+      date
+    };
+    postProduct(product)
+    console.log(product);
 
   //   // Dispatch the action directly
   //   dispatch(AddProducts(product));
 
   //   console.log(product);
 
-  //   // Clear the input fields
-  //   setName('');
-  //   setImage('');
-  //   setPrice('');
-  //   setDes('');
-  //   setRating('');
-  //   setDate('');
-  // };
+    // Clear the input fields
+    setModel('');
+    setImage('');
+    setPrice('');
+    setDes('');
+    setRating('');
+    setDate('');
 
-  // ... rest of your component code
+  }
+   
 
   return (
     <div className='relative py-4 flex justify-center items-center px-4 sm:px-16'>
@@ -46,7 +59,7 @@ const AddToP = () => {
         <form onSubmit={handleSubmit} className='grid gap-4 capitalize grid-cols-2'>
           <div className="flex flex-col">
             <label className='text-indigo-600' htmlFor="name">Name</label>
-            <input value={name}  onChange={(e) => setName(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
+            <input value={model}  onChange={(e) => setModel(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
           </div>
           <div className="flex flex-col">
             <label className='text-indigo-600' htmlFor="image">Image</label>

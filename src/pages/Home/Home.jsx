@@ -10,13 +10,15 @@ const Home = () => {
   const filters = useSelector(state => state.filter);
   const { brands, stock } = filters;
   console.log(filters);
-  // useEffect(() => {
-  //   fetch('http://localhost:5000/api/v1/products')
-  //     .then(res => res.json())
-  //   .then(data=>setProducts(data.data))
-  // },[])
-  const { data, isError, isLoading ,isSuccess} = useGetProductQuery();
+  
+  const { data, isError, isLoading, isSuccess } = useGetProductQuery(null);
   const products = data?.data;
+  if (isLoading) {
+    return <p>loading...</p>
+  }
+  if (isError) {
+    return <p>something went wrong</p>
+  }
   let content;
   // console.log(content);
   if (products?.length) {
