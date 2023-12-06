@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {useDispatch} from 'react-redux'
-import { updateProducts } from '../redux/thunk/editProduct';
+import { updateProducts } from '../features/products/ProductSlice';
 const Update = ({ _id }) => {
     
     const dispatch = useDispatch();
 
-    const [name, setName] = useState('');
+    const [model, setModel] = useState('');
     const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
     const [des, setDes] = useState('');
@@ -16,7 +16,7 @@ const Update = ({ _id }) => {
       e.preventDefault();
   
       const product = {
-        name,
+        model,
         image,
         price,
         des,
@@ -25,17 +25,16 @@ const Update = ({ _id }) => {
       };
   
       // Dispatch the action directly
-      dispatch(updateProducts(_id,product));
+      dispatch(updateProducts({ id: _id, product: product }));
   
       console.log(product);
   
-      // Clear the input fields
-      // setName('');
-      // setImage('');
-      // setPrice('');
-      // setDes('');
-      // setRating('');
-      // setDate('');
+      setModel('');
+      setImage('');
+      setPrice('');
+      setDes('');
+      setRating('');
+      setDate('');
     };
   
   return (
@@ -43,10 +42,12 @@ const Update = ({ _id }) => {
     
           <div className="">
       <h1 className='text-indigo-600 font-semibold text-[22px] '>Add Products</h1>
-      <form onSubmit={handleSubmit} className='grid gap-4 capitalize grid-cols-2'>
+        <form
+          onSubmit={handleSubmit}
+          className='grid gap-4 capitalize grid-cols-2'>
         <div className="flex flex-col">
           <label className='text-indigo-600' htmlFor="name">Name</label>
-          <input  value={name}  onChange={(e) => setName(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
+          <input  value={model}  onChange={(e) => setModel(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
         </div>
         <div className="flex flex-col">
           <label className='text-indigo-600' htmlFor="image">Image</label>

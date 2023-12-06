@@ -1,41 +1,61 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProduct, togglePostSuccess } from '../../features/products/ProductSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AddToP = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { isLoading, error, postSuccess, isError } = useSelector(state => state.product);
 
-  const [name, setName] = useState('');
+  const [model, setModel] = useState('');
   const [image, setImage] = useState('');
   const [price, setPrice] = useState('');
   const [des, setDes] = useState('');
   const [rating, setRating] = useState('');
   const [date, setDate] = useState('');
+  const [brand, setBrand] = useState('')
+  const status = true;
 
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading('posting...',{id:"AddProduct"})
+    }
+    if (!isLoading && postSuccess) {
+      toast.success('product saved correctly', { id: "AddProduct" })
+      dispatch(togglePostSuccess())
+    }
+    if (!isLoading & isError) {
+      toast.error('wrong somting',{id:"AddProduct"})
+    }
+
+  },[isError,isLoading,postSuccess,error])
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  
 
-  //   const product = {
-  //     name,
-  //     image,
-  //     price,
-  //     des,
-  //     rating,
-  //     date
-  //   };
+    const product = {
+      model,
+      image,
+      price,
+      des,
+      rating,
+      date,
+      status,
+    
+    };
 
-  //   // Dispatch the action directly
-  //   dispatch(AddProducts(product));
+dispatch(createProduct(product))
+    console.log(product);
 
-  //   console.log(product);
-
-  //   // Clear the input fields
-  //   setName('');
-  //   setImage('');
-  //   setPrice('');
-  //   setDes('');
-  //   setRating('');
-  //   setDate('');
-  // };
+    // Clear the input fields
+    setModel('');
+    setImage('');
+    setPrice('');
+    setDes('');
+    setRating('');
+    setDate('');
+  };
 
   // ... rest of your component code
 
@@ -46,7 +66,7 @@ const AddToP = () => {
         <form onSubmit={handleSubmit} className='grid gap-4 capitalize grid-cols-2'>
           <div className="flex flex-col">
             <label className='text-indigo-600' htmlFor="name">Name</label>
-            <input value={name}  onChange={(e) => setName(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
+            <input value={model}  onChange={(e) => setModel(e.target.value)} className='py-2 px-8 rounded-md border border-black' type="text" id="name" />
           </div>
           <div className="flex flex-col">
             <label className='text-indigo-600' htmlFor="image">Image</label>
@@ -73,6 +93,7 @@ const AddToP = () => {
           </div>
         </form>
       </div>
+      <Toaster/>
     </div>
   );
 }
